@@ -55,6 +55,7 @@ foreach ($ejercicios as $ejercicio) {
     <title>Dashboard iGym</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -97,6 +98,46 @@ foreach ($ejercicios as $ejercicio) {
                 </div>
             <?php endforeach; ?>
         </div>
+        
+        <h2>Gestión de Ejercicios</h2>
+        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addExerciseModal">
+            Añadir Ejercicio
+        </button>
+        <!-- Modal para añadir un ejercicio-->
+    <div class="modal fade" id="addExerciseModal" tabindex="-1" aria-labelledby="addExerciseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExerciseModalLabel">Añadir Ejercicio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addExerciseForm" action="añadir_ejercicio.php" method="POST">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre del ejercicio</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="grupo_muscular" class="form-label">Grupo muscular</label>
+                            <select id="grupo_muscular" name="grupo_muscular" class="form-select" required>
+                                <option value="">Selecciona un grupo muscular</option>
+                                <option value="Pecho">Pecho</option>
+                                <option value="Espalda">Espalda</option>
+                                <option value="Piernas">Piernas</option>
+                                <option value="Hombros">Hombros</option>
+                                <option value="Brazos">Brazos</option>
+                                <option value="Abdomen">Abdomen</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Añadir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <h3 class="mt-5 mb-5 text-center">Rendimiento promedio por día</h3>
         <div class="row">
