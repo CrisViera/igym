@@ -99,10 +99,12 @@ foreach ($ejercicios as $ejercicio) {
             <?php endforeach; ?>
         </div>
         
-        <h2>Gestión de Ejercicios</h2>
-        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addExerciseModal">
-            Añadir Ejercicio
-        </button>
+        <div class="text-center mt-4">
+            <h2>Gestión de ejercicios</h2>
+    <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addExerciseModal">
+        Añadir Ejercicio
+    </button>
+</div>
         <!-- Modal para añadir un ejercicio-->
     <div class="modal fade" id="addExerciseModal" tabindex="-1" aria-labelledby="addExerciseModalLabel" aria-hidden="true">
         <div class="modal-dialog">
