@@ -127,7 +127,8 @@ foreach ($ejercicios as $ejercicio) {
                                 <option value="Espalda">Espalda</option>
                                 <option value="Piernas">Piernas</option>
                                 <option value="Hombros">Hombros</option>
-                                <option value="Brazos">Brazos</option>
+                                <option value="Bíceps">Bíceps</option>
+                                <option value="Tríceps">Tríceps</option>
                                 <option value="Abdomen">Abdomen</option>
                             </select>
                         </div>
