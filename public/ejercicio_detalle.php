@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['guardarDatos'])) {
             </div>
             <div class="mb-3">
                 <label for="peso" class="form-label">Peso</label>
-                <input type="number" class="form-control" id="peso" name="peso" required autocomplete="off">
+                <input type="number" class="form-control" id="peso" name="peso" required autocomplete="off" step="0.01">
             </div>
             <button type="submit" name="guardarDatos" class="btn btn-primary d-block mx-auto text-center">Guardar</button>
         </form>
