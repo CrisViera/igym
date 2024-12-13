@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['guardarDatos'])) {
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Registro de <?php echo $ejercicio['nombre']; ?></h1>
+        <h1 class="text-center mb-4"><?php echo $ejercicio['nombre']; ?></h1>
         <!-- Botón para regresar al dashboard -->
         <a href="dashboard.php" class="btn btn-secondary mb-3 d-block mx-auto text-center">Volver al Dashboard</a>
         

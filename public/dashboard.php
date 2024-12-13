@@ -56,6 +56,7 @@ foreach ($ejercicios as $ejercicio) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/cerrarAcordeon.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -63,41 +64,45 @@ foreach ($ejercicios as $ejercicio) {
         <p class="text-center mt-3">¿Estás listo para darlo todo?</p>
         <!-- Botón de cerrar sesión -->
 <form action="logout.php" method="post" class="text-center mt-4">
-    <button type="submit" class="btn btn-danger">Cerrar sesión</button>
+    <button type="submit" class="btn btn-danger mb-4">Cerrar sesión</button>
 </form>
 
-        <h3 class="mt-4 text-center mb-3">Grupos musculares</h3>
-
-        <?php if (isset($_SESSION['ultimo_ejercicio'])): ?>
-            <div class="text-center mt-4 mb-4">
-                <a href="ejercicio_detalle.php?ejercicio_id=<?php echo $_SESSION['ultimo_ejercicio']; ?>" class="btn btn-primary">Volver al último ejercicio</a>
-            </div>
-        <?php endif; ?>
-
-        <div class="accordion" id="accordionEjercicios">
-            <?php foreach ($gruposMusculares as $grupo => $ejercicios): ?>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading<?php echo $grupo; ?>">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $grupo; ?>" aria-expanded="false" aria-controls="collapse<?php echo $grupo; ?>">
-                            <?php echo ucfirst($grupo); ?>
-                        </button>
-                    </h2>
-                    <div id="collapse<?php echo $grupo; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $grupo; ?>" data-bs-parent="#accordionEjercicios">
-                        <div class="accordion-body">
-                            <ul class="list-group">
-                                <?php foreach ($ejercicios as $ejercicio): ?>
-                                    <li class="list-group-item">
-                                        <a href="ejercicio_detalle.php?ejercicio_id=<?php echo $ejercicio['id']; ?>" class="btn btn-link text-decoration-none text-dark">
-                                            <?php echo $ejercicio['nombre']; ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    </div>
+<div class="accordion" id="accordionEjercicios">
+    <?php foreach ($gruposMusculares as $grupo => $ejercicios): ?>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading<?php echo md5($grupo); ?>">
+                <button 
+                    class="accordion-button collapsed" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#collapse<?php echo md5($grupo); ?>" 
+                    aria-expanded="false" 
+                    aria-controls="collapse<?php echo md5($grupo); ?>">
+                    <?php echo ucfirst($grupo); ?>
+                </button>
+            </h2>
+            <div 
+                id="collapse<?php echo md5($grupo); ?>" 
+                class="accordion-collapse collapse" 
+                aria-labelledby="heading<?php echo md5($grupo); ?>" 
+                data-bs-parent="#accordionEjercicios">
+                <div class="accordion-body">
+                    <ul class="list-group">
+                        <?php foreach ($ejercicios as $ejercicio): ?>
+                            <li class="list-group-item">
+                                <a href="ejercicio_detalle.php?ejercicio_id=<?php echo $ejercicio['id']; ?>" class="btn btn-link text-decoration-none text-dark">
+                                    <?php echo $ejercicio['nombre']; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
-            <?php endforeach; ?>
+            </div>
         </div>
+    <?php endforeach; ?>
+</div>
+
+
         
         <div class="text-center mt-4">
             <h2>Gestión de ejercicios</h2>
