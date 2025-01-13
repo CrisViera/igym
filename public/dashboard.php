@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL); // Muestra todos los errores
+ini_set('display_errors', 1); // Habilita la visualización de errores
 include_once '../config/database.php';
 
 // Verificar si el usuario está autenticado
@@ -66,6 +68,15 @@ foreach ($ejercicios as $ejercicio) {
 <form action="logout.php" method="post" class="text-center mt-4">
     <button type="submit" class="btn btn-danger mb-4">Cerrar sesión</button>
 </form>
+<div class="mb-4">
+    <input 
+        type="text" 
+        id="searchEjercicios" 
+        class="form-control" 
+        placeholder="Buscar ejercicios..." 
+        onkeyup="buscarEjercicios()"
+    >
+</div>
 
 <div class="accordion" id="accordionEjercicios">
     <?php foreach ($gruposMusculares as $grupo => $ejercicios): ?>
@@ -211,5 +222,34 @@ graficas.forEach(grafica => {
 });
 
     </script>
+    <script>
+    function buscarEjercicios() {
+        const input = document.getElementById('searchEjercicios');
+        const filter = input.value.toLowerCase();
+        const acordeonItems = document.querySelectorAll('#accordionEjercicios .accordion-item');
+
+        acordeonItems.forEach(item => {
+            const botones = item.querySelectorAll('a');
+            let visible = false;
+
+            botones.forEach(boton => {
+                const texto = boton.textContent || boton.innerText;
+                if (texto.toLowerCase().indexOf(filter) > -1) {
+                    boton.closest('li').style.display = '';
+                    visible = true;
+                } else {
+                    boton.closest('li').style.display = 'none';
+                }
+            });
+
+            if (visible) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
+
 </body>
 </html>

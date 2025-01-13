@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['usuario'] = $usuario;
 
         // Redirigir al dashboard
-        header("Location: dashboard.php");
+        header("Location: http://igym.cristianvieracruz.es/dashboard.php");
         exit();
     } else {
         // Si las credenciales son incorrectas

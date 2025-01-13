@@ -2,8 +2,8 @@
 // Configuración de la conexión a la base de datos
 $host = 'localhost';
 $dbname = 'igym';
-$username = 'root';
-$password = '1234';
+$username = 'User_Igym';
+$password = 'Aspire_5735z';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

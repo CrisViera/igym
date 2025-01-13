@@ -8,6 +8,7 @@ if (isset($_POST['registro_id'])) {
     // Eliminar el ejercicio de la base de datos
     $stmt = $pdo->prepare("DELETE FROM registro_ejercicios WHERE id = :registro_id");
     $stmt->execute(['registro_id' => $registro_id]);
+    $registro_id = null;
 
     // Redirigir de vuelta al listado de ejercicios
     header("Location: ejercicio_detalle.php?ejercicio_id=" . $_SESSION['id_ejercicio']); // Ajusta la URL a tu página de listado

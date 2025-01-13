@@ -23,6 +23,11 @@
             </div>
             <button type="submit" class="btn btn-primary d-block mx-auto mt-4">Iniciar Sesión</button>
         </form>
+            <!-- Credenciales de prueba -->
+    <p class="text-center mt-3">
+        <strong>Usuario de prueba:</strong> Gymbro<br>
+        <strong>Contraseña:</strong> 1234
+    </p>
     </div>
 </body>
 </html>
