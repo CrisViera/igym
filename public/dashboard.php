@@ -116,6 +116,10 @@ foreach ($ejercicios as $ejercicio) {
 
         
         <div class="text-center mt-4">
+            <h2>Tablas de entrenamiento</h2>
+            <a href="tablas.php" class="btn btn-danger mt-3">Ver tablas de dioses y semidioses</a>
+        </div>
+        <div class="text-center mt-4">
             <h2>Gestión de ejercicios</h2>
     <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addExerciseModal">
         Añadir Ejercicio
