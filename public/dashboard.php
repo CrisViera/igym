@@ -2,6 +2,7 @@
 error_reporting(E_ALL); // Muestra todos los errores
 ini_set('display_errors', 1); // Habilita la visualización de errores
 include_once '../config/database.php';
+include_once '../classes/GrupoMuscular.php';
 
 // Verificar si el usuario está autenticado
 session_start();
@@ -34,6 +35,8 @@ foreach ($graficaDatos as $dato) {
 }
 
 // Obtener los ejercicios agrupados por grupo muscular
+$grupoMuscular = new GrupoMuscular($pdo);
+$ejercicios = [];
 try {
     $stmt = $pdo->prepare("SELECT id, nombre, grupo_muscular FROM ejercicios");
     $stmt->execute();
@@ -42,11 +45,8 @@ try {
     echo "Error en la consulta: " . $e->getMessage();
 }
 
-// Agrupar ejercicios por grupo muscular
-$gruposMusculares = [];
-foreach ($ejercicios as $ejercicio) {
-    $gruposMusculares[$ejercicio['grupo_muscular']][] = $ejercicio;
-}
+$gruposMusculares = $grupoMuscular->agruparEjercicios($ejercicios);
+$listaGrupos = $grupoMuscular->listar();
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +64,13 @@ foreach ($ejercicios as $ejercicio) {
     <div class="container mt-5">
         <h1 class="text-center">Bienvenido, <?php echo $_SESSION['usuario']; ?></h1>
         <p class="text-center mt-3">¿Estás listo para darlo todo?</p>
+        <?php if (!empty($_SESSION['aviso']) && is_array($_SESSION['aviso'])): ?>
+            <?php $tipoAviso = (($_SESSION['aviso']['tipo'] ?? '') === 'success') ? 'success' : 'danger'; ?>
+            <div class="alert alert-<?php echo $tipoAviso; ?> mt-3" role="alert">
+                <?php echo htmlspecialchars($_SESSION['aviso']['texto'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+            </div>
+            <?php unset($_SESSION['aviso']); ?>
+        <?php endif; ?>
         <!-- Botón de cerrar sesión -->
 <form action="logout.php" method="post" class="text-center mt-4">
     <button type="submit" class="btn btn-danger mb-4">Cerrar sesión</button>
@@ -89,7 +96,7 @@ foreach ($ejercicios as $ejercicio) {
                     data-bs-target="#collapse<?php echo md5($grupo); ?>" 
                     aria-expanded="false" 
                     aria-controls="collapse<?php echo md5($grupo); ?>">
-                    <?php echo ucfirst($grupo); ?>
+                    <?php echo htmlspecialchars(ucfirst($grupo), ENT_QUOTES, 'UTF-8'); ?>
                 </button>
             </h2>
             <div 
@@ -98,15 +105,19 @@ foreach ($ejercicios as $ejercicio) {
                 aria-labelledby="heading<?php echo md5($grupo); ?>" 
                 data-bs-parent="#accordionEjercicios">
                 <div class="accordion-body">
+                    <?php if (empty($ejercicios)): ?>
+                        <p class="text-muted mb-0">Todavía no hay ejercicios en este grupo.</p>
+                    <?php else: ?>
                     <ul class="list-group">
                         <?php foreach ($ejercicios as $ejercicio): ?>
                             <li class="list-group-item">
-                                <a href="ejercicio_detalle.php?ejercicio_id=<?php echo $ejercicio['id']; ?>" class="btn btn-link text-decoration-none text-dark">
-                                    <?php echo $ejercicio['nombre']; ?>
+                                <a href="ejercicio_detalle.php?ejercicio_id=<?php echo (int) $ejercicio['id']; ?>" class="btn btn-link text-decoration-none text-dark">
+                                    <?php echo htmlspecialchars($ejercicio['nombre'], ENT_QUOTES, 'UTF-8'); ?>
                                 </a>
                             </li>
                         <?php endforeach; ?>
                     </ul>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -123,6 +134,9 @@ foreach ($ejercicios as $ejercicio) {
             <h2>Gestión de ejercicios</h2>
     <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addExerciseModal">
         Añadir Ejercicio
+    </button>
+    <button type="button" class="btn btn-outline-primary mt-4 ms-2" data-bs-toggle="modal" data-bs-target="#addGrupoModal">
+        Crear grupo muscular
     </button>
 </div>
         <!-- Modal para añadir un ejercicio-->
@@ -143,18 +157,39 @@ foreach ($ejercicios as $ejercicio) {
                             <label for="grupo_muscular" class="form-label">Grupo muscular</label>
                             <select id="grupo_muscular" name="grupo_muscular" class="form-select" required>
                                 <option value="">Selecciona un grupo muscular</option>
-                                <option value="Pecho">Pecho</option>
-                                <option value="Espalda">Espalda</option>
-                                <option value="Piernas">Piernas</option>
-                                <option value="Hombros">Hombros</option>
-                                <option value="Bíceps">Bíceps</option>
-                                <option value="Tríceps">Tríceps</option>
-                                <option value="Abdomen">Abdomen</option>
+                                <?php foreach ($listaGrupos as $grupo): ?>
+                                    <option value="<?php echo htmlspecialchars($grupo['nombre'], ENT_QUOTES, 'UTF-8'); ?>">
+                                        <?php echo htmlspecialchars($grupo['nombre'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Añadir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addGrupoModal" tabindex="-1" aria-labelledby="addGrupoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addGrupoModalLabel">Crear grupo muscular</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addGrupoForm" action="crear_grupo_muscular.php" method="POST">
+                        <div class="mb-3">
+                            <label for="nombre_grupo" class="form-label">Nombre del grupo muscular</label>
+                            <input type="text" id="nombre_grupo" name="nombre" class="form-control" maxlength="100" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Crear</button>
                         </div>
                     </form>
                 </div>
