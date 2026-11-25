@@ -48,9 +48,10 @@ function resumenTabla($tablaService, $tabla) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tablas iGym</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <?php include_once '../includes/transiciones.php'; ?>
 </head>
 <body>
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 vista">
         <h1 class="text-center">Tablas de entrenamiento</h1>
         <p class="text-center text-muted">Las tablas de semidioses reutilizan los pesos mínimos de las tablas de los dioses cuando el ejercicio coincide.</p>
         <div class="text-center mb-4">
