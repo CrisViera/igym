@@ -67,10 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['guardarDatos'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle Ejercicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <?php include_once '../includes/transiciones.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 vista">
         <h1 class="text-center mb-4"><?php echo $ejercicio['nombre']; ?></h1>
         <!-- Botón para regresar al dashboard -->
         <a href="dashboard.php" class="btn btn-secondary mb-3 d-block mx-auto text-center">Volver al Dashboard</a>

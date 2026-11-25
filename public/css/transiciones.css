@@ -1,0 +1,140 @@
+/* Entrada y salida de los bloques de cada vista. */
+
+@media (prefers-reduced-motion: no-preference) {
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)) {
+        animation: vista-entrar 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(1) { animation-delay: 0.02s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(2) { animation-delay: 0.06s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(3) { animation-delay: 0.1s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(4) { animation-delay: 0.14s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(5) { animation-delay: 0.18s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(6) { animation-delay: 0.22s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(7) { animation-delay: 0.26s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(8) { animation-delay: 0.3s; }
+    .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)):nth-child(n+9) { animation-delay: 0.34s; }
+
+    .vista > .accordion > .accordion-item,
+    .vista .row > [class*="col"] > .card,
+    .vista > ul.list-group > .list-group-item,
+    .vista table > :is(thead, tbody) > tr {
+        animation: vista-entrar 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .vista > .accordion > .accordion-item:nth-child(1),
+    .vista > ul.list-group > .list-group-item:nth-child(1),
+    .vista table > :is(thead, tbody) > tr:nth-child(1) { animation-delay: 0.08s; }
+
+    .vista > .accordion > .accordion-item:nth-child(2),
+    .vista > ul.list-group > .list-group-item:nth-child(2),
+    .vista table > :is(thead, tbody) > tr:nth-child(2) { animation-delay: 0.12s; }
+
+    .vista > .accordion > .accordion-item:nth-child(3),
+    .vista > ul.list-group > .list-group-item:nth-child(3),
+    .vista table > :is(thead, tbody) > tr:nth-child(3) { animation-delay: 0.16s; }
+
+    .vista > .accordion > .accordion-item:nth-child(4),
+    .vista > ul.list-group > .list-group-item:nth-child(4),
+    .vista table > :is(thead, tbody) > tr:nth-child(4) { animation-delay: 0.2s; }
+
+    .vista > .accordion > .accordion-item:nth-child(5),
+    .vista > ul.list-group > .list-group-item:nth-child(5),
+    .vista table > :is(thead, tbody) > tr:nth-child(5) { animation-delay: 0.24s; }
+
+    .vista > .accordion > .accordion-item:nth-child(6),
+    .vista > ul.list-group > .list-group-item:nth-child(6),
+    .vista table > :is(thead, tbody) > tr:nth-child(6) { animation-delay: 0.28s; }
+
+    .vista > .accordion > .accordion-item:nth-child(n+7),
+    .vista > ul.list-group > .list-group-item:nth-child(n+7),
+    .vista table > :is(thead, tbody) > tr:nth-child(n+7) { animation-delay: 0.32s; }
+
+    .vista .row > [class*="col"]:nth-child(1) > .card { animation-delay: 0.12s; }
+    .vista .row > [class*="col"]:nth-child(2) > .card { animation-delay: 0.18s; }
+    .vista .row > [class*="col"]:nth-child(n+3) > .card { animation-delay: 0.24s; }
+
+    html.vista-atras .vista > :not(.modal):not(script):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)),
+    html.vista-atras .vista > .accordion > .accordion-item,
+    html.vista-atras .vista .row > [class*="col"] > .card,
+    html.vista-atras .vista > ul.list-group > .list-group-item,
+    html.vista-atras .vista table > :is(thead, tbody) > tr {
+        animation-name: vista-entrar-atras;
+    }
+
+    .vista.vista-saliendo {
+        pointer-events: none;
+    }
+
+    .vista.vista-saliendo > :not(.modal):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)),
+    .vista.vista-saliendo > .accordion > .accordion-item,
+    .vista.vista-saliendo .row > [class*="col"] > .card,
+    .vista.vista-saliendo > ul.list-group > .list-group-item,
+    .vista.vista-saliendo table {
+        animation: vista-salir 0.22s ease both !important;
+    }
+
+    /* Las líneas del borde pertenecen a la tabla; si las filas se mueven aparte, el borde se queda. */
+    .vista.vista-saliendo table > :is(thead, tbody) > tr {
+        animation: none !important;
+    }
+
+    html.vista-salida-atras .vista.vista-saliendo > :not(.modal):not(.accordion):not(table):not(.table-responsive):not(ul.list-group):not(.row:has(.card)),
+    html.vista-salida-atras .vista.vista-saliendo > .accordion > .accordion-item,
+    html.vista-salida-atras .vista.vista-saliendo .row > [class*="col"] > .card,
+    html.vista-salida-atras .vista.vista-saliendo > ul.list-group > .list-group-item,
+    html.vista-salida-atras .vista.vista-saliendo table {
+        animation-name: vista-salir-atras !important;
+    }
+}
+
+@keyframes vista-entrar {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes vista-entrar-atras {
+    from {
+        opacity: 0;
+        transform: translateY(-14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes vista-salir {
+    from {
+        opacity: 1;
+        transform: none;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+}
+
+@keyframes vista-salir-atras {
+    from {
+        opacity: 1;
+        transform: none;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vista,
+    .vista * {
+        animation: none !important;
+    }
+}
